@@ -54,6 +54,9 @@ public class LocacaoService {
 			if(i == 4) {
 				valorFilme = valorFilme * 0.25;
 			}
+			if(i == 5) {
+				valorFilme = 0d;
+			}
 			
 			valorTotal += valorFilme;
 		}
