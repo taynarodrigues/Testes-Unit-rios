@@ -9,8 +9,10 @@ import static org.junit.Assert.assertThat;
 import java.util.Date;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
@@ -26,6 +28,9 @@ import br.ce.wcaquino.utils.DataUtils;
 public class LocacaoServiceTest {
 	
 	private LocacaoService service;
+	
+	//definição do contador
+	private static int contador = 0;
 
 	@Rule
 	public ErrorCollector error = new ErrorCollector();
@@ -37,11 +42,26 @@ public class LocacaoServiceTest {
 	public void setup() {
 		System.out.println("Before");
 		service = new LocacaoService();
+		//incremento
+		contador++;
+		//impressão do contador
+		System.out.println(contador);
+		
 	}
 	
 	@After
 	public void tearDown() {
 		System.out.println("After");
+	}
+	
+	@BeforeClass
+	public static void setupClass() {
+		System.out.println("Before Class");
+	}
+	
+	@AfterClass
+	public static void tearDownClass() {
+		System.out.println("After Class");
 	}
 
 	@Test
