@@ -10,11 +10,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
@@ -45,7 +42,7 @@ public class LocacaoServiceTest {
 	}
 
 	@Test
-	public void testeLocacao() throws Exception {
+	public void deveAlugarFilme() throws Exception {
 		// cenario
 		Usuario usuario = new Usuario("Usuario 1");
 		List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 2, 5.0));
@@ -62,7 +59,18 @@ public class LocacaoServiceTest {
 	}
 
 	@Test(expected = FilmeSemEstoqueExceptions.class)
-	public void testLocacao_filmeSemEstoque() throws Exception {
+	public void deveLancarExcecaoAoAlugarFilmeSemEstoque() throws Exception {
+
+		// cenario
+		Usuario usuario = new Usuario("Usuario 1");
+		List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 0, 4.0));
+
+		// acao
+		service.alugarFilme(usuario, filmes);
+	}
+	
+	@Test(expected = FilmeSemEstoqueExceptions.class)
+	public void naoDeveAlugarFilmeSemEstoque() throws Exception {
 
 		// cenario
 		Usuario usuario = new Usuario("Usuario 1");
@@ -72,12 +80,11 @@ public class LocacaoServiceTest {
 		service.alugarFilme(usuario, filmes);
 	}
 
-	//Forma Robusta
+	
 	@Test
-	public void testLocacao_usuarioVazio() throws FilmeSemEstoqueExceptions {
+	public void naoDeveAlugarFilmeSemUsuario() throws FilmeSemEstoqueExceptions {
 		// cenario
 		List<Filme> filmes = Arrays.asList(new Filme("Filme 2", 1, 4.0));
-//		Usuario usuario = new Usuario("Usuario 1");
 
 		// acao
 		try {
@@ -87,12 +94,11 @@ public class LocacaoServiceTest {
 			assertThat(e.getMessage(), is("Usuario vazio"));
 		}
 		
-//		System.out.println("Forma Robusta");
 	
 	}
 	
 	@Test
-	public void testLocacao_FilmeVazio() throws FilmeSemEstoqueExceptions, LocadoraException {
+	public void naoDeveAlugarFilmeSemFilme() throws FilmeSemEstoqueExceptions, LocadoraException {
 		//cenario
 		Usuario usuario = new Usuario("Usuario 1");
 		
@@ -104,5 +110,18 @@ public class LocacaoServiceTest {
 		System.out.println("Forma Nova");
 	}
 
+	@Test
+	public void devePagar75PctNoFilme3() throws FilmeSemEstoqueExceptions, LocadoraException {
+		
+		//cenario
+		Usuario usuario = new Usuario("Usuario 1");
+		List<Filme> filmes = Arrays.asList(new Filme("Filme 1", 2, 4.0), new Filme("Filme 2", 2, 4.0), new Filme("Filme 3", 2,4.0));
+		//acao
+		Locacao resultado = service.alugarFilme(usuario, filmes);
+		
+		//verificacao
+//		4+4+3=11
+		assertThat(resultado.getValor(), is(11.0));
+	}
 	
 }
