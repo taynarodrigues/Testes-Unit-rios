@@ -15,9 +15,6 @@ import br.ce.wcaquino.exceptions.LocadoraException;
 public class LocacaoService {
 
 	public Locacao alugarFilme(Usuario usuario, Filme filme) throws FilmeSemEstoqueExceptions, LocadoraException {
-		if (filme.getEstoque() == 0) {
-			throw new FilmeSemEstoqueExceptions();
-		}
 
 		if (usuario == null) {
 			throw new LocadoraException("Usuario vazio");
@@ -25,6 +22,10 @@ public class LocacaoService {
 
 		if (filme == null) {
 			throw new LocadoraException("Filme vazio");
+		}
+		
+		if (filme.getEstoque() == 0) {
+			throw new FilmeSemEstoqueExceptions();
 		}
 
 		Locacao locacao = new Locacao();
