@@ -28,9 +28,7 @@ import br.ce.wcaquino.utils.DataUtils;
 public class LocacaoServiceTest {
 	
 	private LocacaoService service;
-	
-	//definição do contador
-	private static int contador = 0;
+
 
 	@Rule
 	public ErrorCollector error = new ErrorCollector();
@@ -40,28 +38,8 @@ public class LocacaoServiceTest {
 	
 	@Before
 	public void setup() {
-		System.out.println("Before");
+	
 		service = new LocacaoService();
-		//incremento
-		contador++;
-		//impressão do contador
-		System.out.println(contador);
-		
-	}
-	
-	@After
-	public void tearDown() {
-		System.out.println("After");
-	}
-	
-	@BeforeClass
-	public static void setupClass() {
-		System.out.println("Before Class");
-	}
-	
-	@AfterClass
-	public static void tearDownClass() {
-		System.out.println("After Class");
 	}
 
 	@Test
@@ -69,8 +47,7 @@ public class LocacaoServiceTest {
 		// cenario
 		Usuario usuario = new Usuario("Usuario 1");
 		Filme filme = new Filme("Filme 1", 2, 5.0);
-		
-		System.out.println("Teste!");
+	
 
 		// acao
 		Locacao locacao;
@@ -108,7 +85,7 @@ public class LocacaoServiceTest {
 			assertThat(e.getMessage(), is("Usuario vazio"));
 		}
 		
-		System.out.println("Forma Robusta");
+//		System.out.println("Forma Robusta");
 	
 	}
 	
